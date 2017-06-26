@@ -1,0 +1,36 @@
+ void getSumList(vector<int> arr, vector<vector<int>> &result, vector<int> &currentList, int targetLeft, int start, int arrSize)
+    {
+        if(targetLeft < 0)
+        return;
+        
+        if(targetLeft == 0)
+        {
+            result.push_back(currentList);
+            return;
+        }
+        
+        for(int i = start; i < arrSize; i++)
+        {
+            if(i > start && arr[i] == arr[i-1])
+            continue;
+            
+            currentList.push_back(arr[i]);
+            getSumList(arr, result, currentList, targetLeft - arr[i], i+1, arrSize);
+            currentList.pop_back();
+        }
+        
+        return;
+    }
+
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target)
+    {
+        vector<vector<int>> result;
+        vector<int> currentList;
+        sort(candidates.begin(), candidates.end());
+        
+        int arrSize = candidates.size();
+        
+        getSumList(candidates, result, currentList, target, 0, arrSize);
+        
+        return result;
+    }
